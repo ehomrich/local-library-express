@@ -1,13 +1,32 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+/**
+ * MongoDB setup
+ */
+const mongoose = require('mongoose');
 
-var app = express();
+// Set up default mongoose connection
+const mongoDB = 'mongodb://127.0.0.1:27017/local-library';
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+// Get mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+// Get the default connection
+const db = mongoose.connection;
+
+// Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+
+/**
+ * Express configuration
+ */
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
