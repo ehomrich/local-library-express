@@ -1,0 +1,32 @@
+{
+  "name": "local-library-express",
+  "version": "1.0.0",
+  "description": "MDN Express tutorial",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehomrich/local-library-express.git"
+  },
+  "author": "Émerson Pinto Homrich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehomrich/local-library-express/issues"
+  },
+  "private": true,
+  "homepage": "https://github.com/ehomrich/local-library-express#readme",
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "lint": "eslint '**/*.js' --fix"
+  }
+}
