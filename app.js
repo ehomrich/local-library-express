@@ -22,6 +22,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const catalogRouter = require('./routes/catalog');
 
 /**
  * Express configuration
@@ -40,6 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog', catalogRouter);
+
+// disable X-Powered-By header
 app.disable('x-powered-by');
 
 // catch 404 and forward to error handler
