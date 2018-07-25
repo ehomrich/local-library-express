@@ -47,13 +47,13 @@ router.get('/genres', genreController.list);
 /**
  * Book instance routes
  */
-router.get('/bookinstance/create', bookinstanceController.create_get);
-router.post('/bookinstance/create', bookinstanceController.create_post);
-router.get('/bookinstance/:id/delete', bookinstanceController.delete_get);
-router.post('/bookinstance/:id/delete', bookinstanceController.delete_post);
-router.get('/bookinstance/:id/update', bookinstanceController.update_get);
-router.post('/bookinstance/:id/update', bookinstanceController.update_post);
-router.get('/bookinstance/:id', bookinstanceController.detail);
-router.get('/bookinstance', bookinstanceController.list);
+router.get('/book-instance/create', bookinstanceController.create_get);
+router.post('/book-instance/create', bookinstanceController.create_post);
+router.get('/book-instance/:id/delete', bookinstanceController.delete_get);
+router.post('/book-instance/:id/delete', bookinstanceController.delete_post);
+router.get('/book-instance/:id/update', bookinstanceController.update_get);
+router.post('/book-instance/:id/update', bookinstanceController.update_post);
+router.get('/book-instance/:id', bookinstanceController.detail);
+router.get('/book-instance', bookinstanceController.list);
 
 module.exports = router;
