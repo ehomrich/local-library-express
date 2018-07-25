@@ -1,5 +1,10 @@
 const BookInstance = require('../models/bookinstance');
 
+const Book = require('../models/book');
+
+const { body, validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
+
 exports.list = (req, res, next) => {
     BookInstance.find()
         .populate('book')
@@ -38,12 +43,77 @@ exports.detail = (req, res, next) => {
 };
 
 exports.create_get = (req, res, next) => {
-    res.send('NOT IMPLEMENTED: BookInstance create GET');
+    Book.find({}, 'title').exec((err, books) => {
+        if (err) {
+            return next(err);
+        }
+
+        res.render('bookinstance_form', {
+            title: 'Create book instance',
+            books: books
+        });
+    });
 };
 
-exports.create_post = (req, res, next) => {
-    res.send('NOT IMPLEMENTED: BookInstance create POST');
-};
+exports.create_post = [
+    body('book', 'Book must be specified')
+        .isLength({ min: 1 })
+        .trim(),
+    body('imprint', 'Imprint must be specified')
+        .isLength({ min: 1 })
+        .trim(),
+    body('due_back', 'Invalid date')
+        .optional({ checkFalsy: true })
+        .isISO8601(),
+
+    sanitizeBody('book')
+        .trim()
+        .escape(),
+    sanitizeBody('imprint')
+        .trim()
+        .escape(),
+    sanitizeBody('status')
+        .trim()
+        .escape(),
+    sanitizeBody('due_back').toDate(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        const bookInstance = new BookInstance({
+            book: req.body.book,
+            imprint: req.body.imprint,
+            status: req.body.status,
+            due_back: req.body.due_back
+        });
+
+        if (!errors.isEmpty()) {
+            Book.find({}, 'title').exec((err, books) => {
+                if (err) {
+                    return next(err);
+                }
+
+                res.render('bookinstance_form', {
+                    title: 'Create book instance',
+                    books: books,
+                    selectedBook: bookInstance.book._id,
+                    errors: errors.array(),
+                    bookInstance: bookInstance
+                });
+            });
+
+            return;
+        } else {
+            bookInstance.save(err => {
+                if (err) {
+                    return next(err);
+                }
+
+                res.redirect(bookInstance.url);
+            });
+        }
+    }
+];
 
 exports.delete_get = (req, res, next) => {
     res.send('NOT IMPLEMENTED: BookInstance delete GET');
