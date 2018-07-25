@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const Genre = mongoose.model('Genre');
+const Genre = require('../models/genre');
 
 exports.list = (req, res, next) => {
     res.send('NOT IMPLEMENTED: Genre list');

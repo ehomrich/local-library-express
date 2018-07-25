@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const Author = mongoose.model('Author');
+const Author = require('../models/author');
 
 exports.list = (req, res, next) => {
     res.send('NOT IMPLEMENTED: Author list');
