@@ -1,9 +1,18 @@
-const mongoose = require('mongoose');
-
-const BookInstance = mongoose.model('BookInstance');
+const BookInstance = require('../models/bookinstance');
 
 exports.list = (req, res, next) => {
-    res.send('NOT IMPLEMENTED: BookInstance list');
+    BookInstance.find()
+        .populate('book')
+        .exec((err, bookinstancesList) => {
+            if (err) {
+                return next(err);
+            }
+
+            res.render('bookinstance_list', {
+                title: 'Book Instance List',
+                bookinstancesList: bookinstancesList
+            });
+        });
 };
 
 exports.detail = (req, res, next) => {
