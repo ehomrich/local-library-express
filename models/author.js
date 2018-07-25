@@ -32,11 +32,11 @@ AuthorSchema.virtual('url').get(function () {
 });
 
 AuthorSchema.virtual('date_of_birth_formatted').get(function () {
-    return moment(this.due_back).format('DD-MM-YYYY');
+    return moment(this.date_of_birth).format('DD-MM-YYYY');
 });
 
 AuthorSchema.virtual('date_of_death_formatted').get(function () {
-    return moment(this.due_back).format('DD-MM-YYYY');
+    return moment(this.date_of_death).format('DD-MM-YYYY');
 });
 
 module.exports = mongoose.model('Author', AuthorSchema);
